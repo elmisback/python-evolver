@@ -7,5 +7,5 @@ setup(name='evolver',
       author='Edward Misback',
       author_email='elmisback@gmail.com',
       license='GNU GPL',
-      packages=['evolver'],
-      zip_safe=False)
+      packages=['evolver']
+      )
