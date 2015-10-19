@@ -1,15 +1,5 @@
 """evolver.py: a simple Python interface to Ken Brakke's surface evolver REPL.
 
-# Usage
-```
-import evolver
-
-with evolver.Evolver('/path/to/evolver') as E:
-    E.run_command('foo := 3')
-    output = E.run_command('print foo')
-    print output  # prints the string 3
-```
-
 # Notes
 The procedures here could be generalized to allow interaction with any 
 command-line REPL interface.
@@ -49,15 +39,16 @@ class Evolver(object):
         command = 'g ' + str(repeats)
         output = self.run_command(command)
         split_output = output.split()
-        if not split_output
-            output = self._get_response(delimeter='Enter command:')
-            split_output = output.split()
+        if not split_output:
+        	output = self._get_response(delimeter='Enter command:')
+        	split_output = output.split()
         values = list()
         for i in range(3):
             values.append(i)
         values[0] = split_output[(repeats-1)*7 + 2]
         values[1] = split_output[(repeats-1)*7 + 4]
         values[2] = split_output[(repeats-1)*7 + 6]
+        print output + '\n'
         if to_print:
             print output + '\n'
         return values
@@ -70,9 +61,11 @@ class Evolver(object):
         output = ''
         while True:
             # Wait for output.
+
             stdout, _, _ = select.select([self.evolver.stdout], [], [], 1)
             new = _non_block_read(self.evolver.stdout)
             end = new.find(delimeter)
+                
             if end >= 0:
                 return (output + new[:end]).strip()
             output += new
@@ -81,7 +74,7 @@ class Evolver(object):
         if self.working_file: 
             print 'File already opened\n'
         else:  
-            print self.run_command(data_file, delimeter='Enter command: //End Of Input')
+            self.run_command(data_file, delimeter='Enter command: //End Of Input')
             self.working_file = data_file
             print 'Opened file: ' + data_file + '\n'
 
