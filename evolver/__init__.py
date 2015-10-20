@@ -1,1 +1,1 @@
-from evolver import Evolver
+from evolver import Evolver, logger
