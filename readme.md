@@ -20,8 +20,8 @@ with evolver.Evolver('/path/to/evolver') as E:
 
 ### Development
 
-Get [pip](http://pip.readthedocs.org/en/stable/installing/). Clone the
-repository and run 
+Get [pip](http://pip.readthedocs.org/en/stable/installing/). [Clone the
+repository](https://help.github.com/articles/cloning-a-repository/) and run 
 
 ```
 pip install --editable /path/to/repo
