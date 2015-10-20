@@ -34,15 +34,14 @@ class Evolver(object):
         output = ''
         while True:
             # Wait for output.
-
             stdout, _, _ = select.select([self.evolver.stdout], [], [], 1)
             new = _non_block_read(self.evolver.stdout)
             logger.debug('Got output: <%s>', new)
-            end = new.find(delimeter)
+            output += new
+            end = output.find(delimeter)
             if end >= 0:
                 logger.debug('Delimeter present. Stopping.')
-                return (output + new[:end]).strip()  # Exclude last line.
-            output += new
+                return (output[:end]).strip()  # Exclude last line.
 
     def run_command(self, command, delimeter="Enter command:"):
         """Returns whitespace-stripped output for `command` up to `delimeter`.
@@ -69,8 +68,6 @@ class Evolver(object):
         self.working_file = False
         check = self._get_response('Enter new datafile name '  
                                    '(none to continue, q to quit):')
-        #check = self.run_command('', delimeter='Enter new datafile name '  
-        #                                       '(none to continue, q to quit):')
         check = self.run_command('')
         if check:
             self.evolver.terminate()
@@ -82,6 +79,7 @@ class Evolver(object):
     def close_file(self):
         self.run_command('q', delimeter='Enter new datafile name '
                          '(none to continue, q to quit):') 
+        self.run_command('')
         print '\nClosed File: ' + self.working_file
         self.working_file = False
 
@@ -112,12 +110,13 @@ class Evolver(object):
     def open_file(self, data_file):    
         if self.working_file: 
             raise Exception('A file is already open!')
-        else: 
-            self.run_command('q', delimeter='Enter new datafile name '
-                                            '(none to continue, q to quit):')
-            self.run_command(data_file, delimeter='Enter command: //End Of Input')
-            self.working_file = data_file
-            print 'Opened file: ' + data_file + '\n'
+        logger.debug('Opening file <%s>', data_file)
+        self.run_command('q', delimeter='Enter new datafile name '
+                                        '(none to continue, q to quit):')
+        logger.debug('Entered file-open dialog')
+        self.run_command(data_file, delimeter='Enter command: //End Of Input\nEnter command: ')
+        self.working_file = data_file
+        print 'Opened file: ' + data_file + '\n'
 
     def refine(self, repeats='1'):
         """refines a specified number of times"""
