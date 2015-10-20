@@ -96,7 +96,7 @@ class Evolver(object):
         command = 'V '+ str(repeats)
         return self.run_command(command)    
 
-    def __init__(self, executable):
+    def __init__(self, executable='evolver'):
         # We use subprocess.PIPE so this process can interact with evolver's
         # stdin/out/err streams.
         self.evolver = subprocess.Popen([executable], 

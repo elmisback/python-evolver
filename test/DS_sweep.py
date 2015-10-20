@@ -23,15 +23,14 @@ def find_values(fileloc, phrase):
 	return param
 
 def define_values(bo):
-	wf = open('/Users/kevinshebek/fe/dropSinusoidal.fe', 'r')
+	wf = open('./dropSinusoidal.fe', 'r')
 	m = wf.read()
 	m = re.sub('Bo = \w*.\w*', 'Bo = %f' % bo, m)
-	wf = open('/Users/kevinshebek/fe/dropSinusoidal.fe', 'w')
+	wf = open('./dropSinusoidal.fe', 'w')
 	wf.write(m)
 
 def main():
     """The main routine."""
-       
 
     with Evolver('/Users/kevinshebek/Documents/Evolver/src/evolver') as E:
         

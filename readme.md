@@ -1,5 +1,13 @@
 ## python-evolver
 
+### Setup
+
+Make sure evolver is on the system path. This is as simple as running
+
+```
+ln -s /Absolute/path/to/evolver /usr/local/bin/evolver
+```
+
 ### Usage
 ```
 import evolver
