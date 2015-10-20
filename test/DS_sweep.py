@@ -7,8 +7,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 import time
 
-from evolver import Evolver
+import evolver
+import logging
 
+evolver.logger.setLevel(logging.DEBUG)
+evolver.logger.addHandler(logging.StreamHandler())
 
 def find_values(fileloc, phrase):
 	wf = open(fileloc, 'r')
@@ -32,7 +35,7 @@ def define_values(bo):
 def main():
     """The main routine."""
 
-    with Evolver('/Users/kevinshebek/Documents/Evolver/src/evolver') as E:
+    with evolver.Evolver() as E:
         
         n = 1000
     	init_bo = 0

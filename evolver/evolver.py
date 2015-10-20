@@ -111,8 +111,10 @@ class Evolver(object):
 
     def open_file(self, data_file):    
         if self.working_file: 
-            print 'File already opened\n'
-        else:  
+            raise Exception('A file is already open!')
+        else: 
+            self.run_command('q', delimeter='Enter new datafile name '
+                                            '(none to continue, q to quit):')
             self.run_command(data_file, delimeter='Enter command: //End Of Input')
             self.working_file = data_file
             print 'Opened file: ' + data_file + '\n'
