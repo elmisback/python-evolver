@@ -37,7 +37,7 @@ class Evolver(object):
             stdout, _, _ = select.select([self.evolver.stdout], [], [], 1)
             new = _non_block_read(self.evolver.stdout)
             logger.debug('Got output: <%s>', new)
-            output += new
+            output += new.decode('utf-8')
             end = output.find(delimeter)
             if end >= 0:
                 logger.debug('Delimeter present. Stopping.')
@@ -49,7 +49,7 @@ class Evolver(object):
         logger.debug('Running command <%s> with delimeter <%s>', 
                      command, delimeter)
         # (\n executes command)
-        self.evolver.stdin.write(command + '\n')
+        self.evolver.stdin.write(command.encode('ascii') + '\n'.encode('ascii'))
         self.evolver.stdin.flush()
         response = self._get_response(delimeter)
         logger.debug('Response: <%s>', response)
@@ -80,7 +80,7 @@ class Evolver(object):
         self.run_command('q', delimeter='Enter new datafile name '
                          '(none to continue, q to quit):') 
         self.run_command('')
-        print '\nClosed File: ' + self.working_file
+        print('\nClosed File: ' + self.working_file)
         self.working_file = False
 
     def dump(self):
@@ -102,9 +102,9 @@ class Evolver(object):
         values[0] = split_output[(repeats-1)*7 + 2]
         values[1] = split_output[(repeats-1)*7 + 4]
         values[2] = split_output[(repeats-1)*7 + 6]
-        print output + '\n'
+        print(output + '\n')
         if to_print:
-            print output + '\n'
+            print(output + '\n')
         return values
 
     def open_file(self, data_file):    
@@ -116,7 +116,7 @@ class Evolver(object):
         logger.debug('Entered file-open dialog')
         self.run_command(data_file, delimeter='Enter command: //End Of Input\nEnter command: ')
         self.working_file = data_file
-        print 'Opened file: ' + data_file + '\n'
+        print('Opened file: ' + data_file + '\n')
 
     def refine(self, repeats='1'):
         """refines a specified number of times"""
