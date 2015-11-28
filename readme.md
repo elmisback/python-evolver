@@ -15,7 +15,7 @@ import evolver
 with evolver.Evolver('/path/to/evolver') as E:
     E.run_command('foo := 3')
     output = E.run_command('print foo')
-    print output  # prints the string 3
+    print(output) # prints the string 3
 ```
 
 ### Development
